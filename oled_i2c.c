@@ -96,7 +96,6 @@
 #define SSD1306_SETCHARGEPUMP       0x8D    // enable / disable charge pump
 // function definitions
 
-
 /* 
 Before every command a control byte must be sent.
 Some commands require multiple operands !!!
@@ -107,61 +106,44 @@ const uint8_t oled_addr = 0x3C;      /* display i2c address */
 const uint8_t ctrl_byte_cmd = 0x00;  /* Co = 0, D/C# = 0 */
 const uint8_t ctrl_byte_data = 0x40; /* Co = 0, D/C# = 1 */
 uint8_t cmd_buffer[] = { 0 }; /* buffer for commands, just before getting send over i2c */
+uint8_t out_buffer[1024] = { 0 };
 
-uint8_t fill_screen[16] = { 0 };
-uint8_t empty_screen[16] = { 0 };
+static uint8_t ssd1306_vram[SSD1306_ROWS / 8][SSD1306_COLUMNS] = { 0 };
 
-static const uint8_t oled_init_list[] = { 
-    OLED_CMD, /* indicates following data are commands */
-    OLED_SET_MULTIPLEX_RATIO,
-    0x3F,
-    OLED_SET_DISPLAY_OFFSET,
-    0x00, /* no display offset */                                          
-    OLED_SET_START_LINE | 0x00, /* start at line #0 */
-    OLED_SET_SEGMENT_REMAP | 0x01,
-    OLED_SET_COM_OUTPUT_SCANDIR,
-    OLED_SET_COMPINS,
-    0x02, /* dunno why */
-    OLED_SET_CONTRAST,                                          
-    0x7F, /* datasheet recommended */
-    OLED_RESUME_TO_RAM,
-    OLED_SET_NORMAL_DISPLAY,
-    OLED_SET_CLKDIV_AND_FOSC,
-    0x80, /*Datasheet suggested 0x80 */
-    OLED_ENABLE_CHARGEPUMP, /* Charge pump setting */
-    0x14, /* charge pump enable */
-    OLED_SET_DISPLAY_ON /* display on */
-}; /* end of init sequence, display is ready for data in ram */
+void ssd1306_refresh(){             /* sends VRAM to the screen GDDRAM via out_buffer */
+    out_buffer[0] = OLED_DATA;
+    memcpy(out_buffer + sizeof(uint8_t), ssd1306_vram, sizeof(ssd1306_vram));
+    i2c_write_blocking(i2c0, oled_addr, out_buffer, sizeof(out_buffer),false);
+}
 
-static const uint8_t oled_init_list2[] = {
+static const uint8_t ssd1306_cmdlist_init[] = {
         SSD1306_CMD_START,              // start commands
         SSD1306_SETDISPLAY_OFF,         // turn off display
         SSD1306_SETDISPLAYCLOCKDIV,     // set clock:
-        0x80,                           //   Fosc = 8, divide ratio = 0+1
+        0x80,                           // Fosc = 8, divide ratio = 0+1
         SSD1306_SETMULTIPLEX,           // display multiplexer:
-        (SSD1306_ROWS - 1),             //   number of display rows
+        (SSD1306_ROWS - 1),             // number of display rows
         SSD1306_VERTICALOFFSET,         // display vertical offset:
-        0,                              //   no offset
+        0,                              // no offset
         SSD1306_SETSTARTLINE | 0x00,    // RAM start line 0
         SSD1306_SETCHARGEPUMP,          // charge pump:
-        0x14,                           //   charge pump ON (0x10 for OFF)
+        0x14,                           // charge pump ON (0x10 for OFF)
         SSD1306_SETADDRESSMODE,         // addressing mode:
-        0x00,                           //   horizontal mode
+        0x00,                           // horizontal mode
         SSD1306_COLSCAN_DESCENDING,     // flip columns
         SSD1306_COMSCAN_ASCENDING,      // don't flip rows (pages)
         SSD1306_SETCOMPINS,             // set COM pins
-        0x02,                           //   sequential pin mode
+        0x02,                           // sequential pin mode
         SSD1306_SETCONTRAST,            // set contrast
-        0x00,                           //   minimal contrast
+        0x00,                           // minimal contrast
         SSD1306_SETPRECHARGE,           // set precharge period
-        0xF1,                           //   phase1 = 15, phase2 = 1
+        0xF1,                           // phase1 = 15, phase2 = 1
         SSD1306_SETVCOMLEVEL,           // set VCOMH deselect level
-        0x40,                           //   ????? (0,2,3)
+        0x40,                           // ????? (0,2,3)
         SSD1306_ENTIREDISPLAY_OFF,      // use RAM contents for display
         SSD1306_SETINVERT_OFF,          // no inversion
         SSD1306_SCROLL_DEACTIVATE,      // no scrolling
         SSD1306_SETDISPLAY_ON,          // turn on display (normal mode)
-
 };
 
 void ssd1306_drawPixel(uint16_t x, uint16_t y, uint8_t value){
@@ -205,7 +187,7 @@ void oled_send_bitmap(uint8_t* bitmap, size_t lenght){
 }
 
 void oled_init(){
-    oled_send_command_list(oled_init_list2, sizeof(oled_init_list2));
+    oled_send_command_list(ssd1306_cmdlist_init, sizeof(ssd1306_cmdlist_init));
 }
 
 
@@ -261,16 +243,16 @@ int main() {
 
     
     oled_init();
-    memset(fill_screen, 0xFF, sizeof(fill_screen));    
+    memset(ssd1306_vram, 0xFF, sizeof(ssd1306_vram));  /* fill entire screen */
+    ssd1306_refresh();  
    
-    while(1){
-
-        for(uint16_t x = 0; x < SSD1306_COLUMNS; x++){
-         for(uint16_t y = 0; y < SSD1306_ROWS; y++) {
-             ssd1306_drawPixel(x, y, 1);
-            sleep_ms(1);
-         }
-        }
+    while(1){         
+        memset(ssd1306_vram, 0xFF, sizeof(ssd1306_vram));  /* fill entire screen */
+        ssd1306_refresh();
+        sleep_ms(1000);
+        memset(ssd1306_vram, 0x00, sizeof(ssd1306_vram));  /* empty entire screen */
+        ssd1306_refresh();
+        sleep_ms(1000);
     }
 
     return 0;
