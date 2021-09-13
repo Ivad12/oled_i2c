@@ -1924,10 +1924,6 @@ CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pi
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_base\include\pico\config.h
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_base\include\pico\error.h
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_base\include\pico\types.h
-CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_binary_info\include\pico\binary_info.h
-CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_binary_info\include\pico\binary_info\code.h
-CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_binary_info\include\pico\binary_info\defs.h
-CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_binary_info\include\pico\binary_info\structure.h
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_stdlib\include\pico\stdlib.h
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\common\pico_time\include\pico\time.h
 CMakeFiles\oled_i2c.dir\oled_i2c.c.obj: C:\Raspberry\Pico\pico-sdk\src\rp2040\hardware_regs\include\hardware\platform_defs.h

@@ -1,0 +1,2 @@
+C:\PROGRA~2\GNUARM~1\102021~1.07\bin\ARM-NO~2.EXE qc libssd13006.a CMakeFiles/ssd13006.dir/ssd1306.c.obj
+C:\PROGRA~2\GNUARM~1\102021~1.07\bin\AR17F9~1.EXE libssd13006.a

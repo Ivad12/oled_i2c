@@ -13,10 +13,10 @@ stdlib.h
 -
 string.h
 -
+math.h
+-
 pico/stdlib.h
 C:/Raspberry/Pico/oled_i2c/pico/stdlib.h
-pico/binary_info.h
-C:/Raspberry/Pico/oled_i2c/pico/binary_info.h
 hardware/i2c.h
 C:/Raspberry/Pico/oled_i2c/hardware/i2c.h
 
@@ -56,26 +56,6 @@ stdint.h
 stdbool.h
 -
 stddef.h
--
-
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info.h
-pico/binary_info/defs.h
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/pico/binary_info/defs.h
-pico/binary_info/structure.h
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/pico/binary_info/structure.h
-pico/binary_info/code.h
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/pico/binary_info/code.h
-
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/code.h
-pico.h
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/pico.h
-pico/binary_info/structure.h
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/pico/binary_info/structure.h
-
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/defs.h
-
-C:/Raspberry/Pico/pico-sdk/src/common/pico_binary_info/include/pico/binary_info/structure.h
-stdint.h
 -
 
 C:/Raspberry/Pico/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h
