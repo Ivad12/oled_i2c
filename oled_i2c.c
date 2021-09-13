@@ -6,7 +6,6 @@
 #include "hardware/i2c.h"
 
 /* Hardware description */
-#define SSD1306_ADDRESS     0x3C
 #define SSD1306_ROWS        32 
 #define SSD1306_COLUMNS     128
 #define SSD1306_PAGE_START  0
