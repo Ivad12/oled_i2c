@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Raspberry/Pico/oled_i2c/ssd1306.c
+stdlib.h
+-
+string.h
+-
+stdio.h
+-
+pico/stdlib.h
+C:/Raspberry/Pico/oled_i2c/pico/stdlib.h
+ssd1306.h
+C:/Raspberry/Pico/oled_i2c/ssd1306.h
+hardware/i2c.h
+C:/Raspberry/Pico/oled_i2c/hardware/i2c.h
+
+C:/Raspberry/Pico/oled_i2c/ssd1306.h
+
