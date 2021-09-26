@@ -63,8 +63,108 @@
 // Charge Pump Commands (p. 62)
 #define SSD1306_SETCHARGEPUMP       0x8D    // enable / disable charge pump
 
+/* new font table designed for ssd1306 */
+static const uint8_t ssd1306_font6x8 [][6]=
+ {
+   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // sp
+   0x00, 0x00, 0x00, 0x2f, 0x00, 0x00, // !
+   0x00, 0x00, 0x07, 0x00, 0x07, 0x00, // "
+   0x00, 0x14, 0x7f, 0x14, 0x7f, 0x14, // #
+   0x00, 0x24, 0x2a, 0x7f, 0x2a, 0x12, // $
+   0x00, 0x23, 0x13, 0x08, 0x64, 0x62, // %
+   0x00, 0x36, 0x49, 0x55, 0x22, 0x50, // &
+   0x00, 0x00, 0x05, 0x03, 0x00, 0x00, // '
+   0x00, 0x00, 0x1c, 0x22, 0x41, 0x00, // (
+   0x00, 0x00, 0x41, 0x22, 0x1c, 0x00, // )
+   0x00, 0x14, 0x08, 0x3E, 0x08, 0x14, // *
+   0x00, 0x08, 0x08, 0x3E, 0x08, 0x08, // +
+   0x00, 0x00, 0x00, 0xA0, 0x60, 0x00, // ,
+   0x00, 0x08, 0x08, 0x08, 0x08, 0x08, // -
+   0x00, 0x00, 0x60, 0x60, 0x00, 0x00, // .
+   0x00, 0x20, 0x10, 0x08, 0x04, 0x02, // /
+   0x00, 0x3E, 0x51, 0x49, 0x45, 0x3E, // 0
+   0x00, 0x00, 0x42, 0x7F, 0x40, 0x00, // 1
+   0x00, 0x42, 0x61, 0x51, 0x49, 0x46, // 2
+   0x00, 0x21, 0x41, 0x45, 0x4B, 0x31, // 3
+   0x00, 0x18, 0x14, 0x12, 0x7F, 0x10, // 4
+   0x00, 0x27, 0x45, 0x45, 0x45, 0x39, // 5
+   0x00, 0x3C, 0x4A, 0x49, 0x49, 0x30, // 6
+   0x00, 0x01, 0x71, 0x09, 0x05, 0x03, // 7
+   0x00, 0x36, 0x49, 0x49, 0x49, 0x36, // 8
+   0x00, 0x06, 0x49, 0x49, 0x29, 0x1E, // 9
+   0x00, 0x00, 0x36, 0x36, 0x00, 0x00, // :
+   0x00, 0x00, 0x56, 0x36, 0x00, 0x00, // ;
+   0x00, 0x08, 0x14, 0x22, 0x41, 0x00, // <
+   0x00, 0x14, 0x14, 0x14, 0x14, 0x14, // =
+   0x00, 0x00, 0x41, 0x22, 0x14, 0x08, // >
+   0x00, 0x02, 0x01, 0x51, 0x09, 0x06, // ?
+   0x00, 0x32, 0x49, 0x59, 0x51, 0x3E, // @
+   0x00, 0x7C, 0x12, 0x11, 0x12, 0x7C, // A
+   0x00, 0x7F, 0x49, 0x49, 0x49, 0x36, // B
+   0x00, 0x3E, 0x41, 0x41, 0x41, 0x22, // C
+   0x00, 0x7F, 0x41, 0x41, 0x22, 0x1C, // D
+   0x00, 0x7F, 0x49, 0x49, 0x49, 0x41, // E
+   0x00, 0x7F, 0x09, 0x09, 0x09, 0x01, // F
+   0x00, 0x3E, 0x41, 0x49, 0x49, 0x7A, // G
+   0x00, 0x7F, 0x08, 0x08, 0x08, 0x7F, // H
+   0x00, 0x00, 0x41, 0x7F, 0x41, 0x00, // I
+   0x00, 0x20, 0x40, 0x41, 0x3F, 0x01, // J
+   0x00, 0x7F, 0x08, 0x14, 0x22, 0x41, // K
+   0x00, 0x7F, 0x40, 0x40, 0x40, 0x40, // L
+   0x00, 0x7F, 0x02, 0x0C, 0x02, 0x7F, // M
+   0x00, 0x7F, 0x04, 0x08, 0x10, 0x7F, // N
+   0x00, 0x3E, 0x41, 0x41, 0x41, 0x3E, // O
+   0x00, 0x7F, 0x09, 0x09, 0x09, 0x06, // P
+   0x00, 0x3E, 0x41, 0x51, 0x21, 0x5E, // Q
+   0x00, 0x7F, 0x09, 0x19, 0x29, 0x46, // R
+   0x00, 0x46, 0x49, 0x49, 0x49, 0x31, // S
+   0x00, 0x01, 0x01, 0x7F, 0x01, 0x01, // T
+   0x00, 0x3F, 0x40, 0x40, 0x40, 0x3F, // U
+   0x00, 0x1F, 0x20, 0x40, 0x20, 0x1F, // V
+   0x00, 0x3F, 0x40, 0x38, 0x40, 0x3F, // W
+   0x00, 0x63, 0x14, 0x08, 0x14, 0x63, // X
+   0x00, 0x07, 0x08, 0x70, 0x08, 0x07, // Y
+   0x00, 0x61, 0x51, 0x49, 0x45, 0x43, // Z
+   0x00, 0x00, 0x7F, 0x41, 0x41, 0x00, // [
+   0x00, 0x55, 0x2A, 0x55, 0x2A, 0x55, // 55
+   0x00, 0x00, 0x41, 0x41, 0x7F, 0x00, // ]
+   0x00, 0x04, 0x02, 0x01, 0x02, 0x04, // ^
+   0x00, 0x40, 0x40, 0x40, 0x40, 0x40, // _
+   0x00, 0x00, 0x01, 0x02, 0x04, 0x00, // '
+   0x00, 0x20, 0x54, 0x54, 0x54, 0x78, // a
+   0x00, 0x7F, 0x48, 0x44, 0x44, 0x38, // b
+   0x00, 0x38, 0x44, 0x44, 0x44, 0x20, // c
+   0x00, 0x38, 0x44, 0x44, 0x48, 0x7F, // d
+   0x00, 0x38, 0x54, 0x54, 0x54, 0x18, // e
+   0x00, 0x08, 0x7E, 0x09, 0x01, 0x02, // f
+   0x00, 0x18, 0xA4, 0xA4, 0xA4, 0x7C, // g
+   0x00, 0x7F, 0x08, 0x04, 0x04, 0x78, // h
+   0x00, 0x00, 0x44, 0x7D, 0x40, 0x00, // i
+   0x00, 0x40, 0x80, 0x84, 0x7D, 0x00, // j
+   0x00, 0x7F, 0x10, 0x28, 0x44, 0x00, // k
+   0x00, 0x00, 0x41, 0x7F, 0x40, 0x00, // l
+   0x00, 0x7C, 0x04, 0x18, 0x04, 0x78, // m
+   0x00, 0x7C, 0x08, 0x04, 0x04, 0x78, // n
+   0x00, 0x38, 0x44, 0x44, 0x44, 0x38, // o
+   0x00, 0xFC, 0x24, 0x24, 0x24, 0x18, // p
+   0x00, 0x18, 0x24, 0x24, 0x18, 0xFC, // q
+   0x00, 0x7C, 0x08, 0x04, 0x04, 0x08, // r
+   0x00, 0x48, 0x54, 0x54, 0x54, 0x20, // s
+   0x00, 0x04, 0x3F, 0x44, 0x40, 0x20, // t
+   0x00, 0x3C, 0x40, 0x40, 0x20, 0x7C, // u
+   0x00, 0x1C, 0x20, 0x40, 0x20, 0x1C, // v
+   0x00, 0x3C, 0x40, 0x30, 0x40, 0x3C, // w
+   0x00, 0x44, 0x28, 0x10, 0x28, 0x44, // x
+   0x00, 0x1C, 0xA0, 0xA0, 0xA0, 0x7C, // y
+   0x00, 0x44, 0x64, 0x54, 0x4C, 0x44, // z
+   0x00, 0x00, 0x08, 0x77, 0x00, 0x00, // {
+   0x00, 0x00, 0x00, 0x7F, 0x00, 0x00, // |
+   0x00, 0x00, 0x77, 0x08, 0x00, 0x00, // }
+   0x00, 0x10, 0x08, 0x10, 0x08, 0x00, // ~
+   0x14, 0x14, 0x14, 0x14, 0x14, 0x14, // horiz lines // DEL
+ };
 
-/* library functions declaration */
+/* library functions definition */
 void ssd1306_send_cmdlist(const uint8_t* list, size_t lenght);
 void ssd1306_send_data(const uint8_t* data, size_t lenght);
 void ssd1306_init();
@@ -72,37 +172,37 @@ void ssd1306_refresh();
 
 uint8_t ssd1306_draw_pixel(uint16_t x, uint16_t y, uint8_t value);
 
-/* library function implementation */
+/* static global variables */
 static uint8_t i2c_output_buffer[1024]; /* i2c outgoing buffer */
-static uint8_t ssd1306_vram[SSD1306_COLUMNS][SSD1306_ROWS / 8] = { 0 };
+static uint8_t ssd1306_vram[SSD1306_ROWS / 8][SSD1306_COLUMNS]; /* vram buffer */
 
 static const uint8_t ssd1306_cmdlist_init[] = {
-        SSD1306_SETDISPLAY_OFF,         /* turn off display */
-        SSD1306_SETDISPLAYCLOCKDIV,     /* set clock: */
-        0x80,                           /* Fosc = 8, divide ratio = 0 + 1 */
-        SSD1306_SETMULTIPLEX,           /* sets multiplex ratio of 31 */
-        (SSD1306_ROWS - 1),             /* COM0 to COM31 on the display */
-        SSD1306_VERTICALOFFSET,         /* display vertical offset: */
-        0,                              /* no vertical offset */
-        SSD1306_SETSTARTLINE | 0x00,    /* RAM start line at 0 */
-        SSD1306_SETCHARGEPUMP,          /* charge pump */
-        0x14,                           /* charge pump ON (0x10 for OFF) */
-        SSD1306_SETADDRESSMODE,         /* addressing mode */
-        0x00,                           /* horizontal addressing mode */
-        SSD1306_COLSCAN_DESCENDING,     /* flip columns */
-        SSD1306_COMSCAN_ASCENDING,      /* don't flip rows (pages) */
-        SSD1306_SETCOMPINS,             /* set COM pins */
-        0x02,                           /* sequential pin mode */
-        SSD1306_SETCONTRAST,            /* set contrast */
-        0x7F,                           /* datasheet default */
-        SSD1306_SETPRECHARGE,           /* set precharge period */
-        0xF1,                           /* phase1 = 15, phase2 = 1 */ 
-        SSD1306_SETVCOMLEVEL,           /* set VCOMH deselect level */
-        0x40,                           /* ????? (0,2,3) */
-        SSD1306_ENTIREDISPLAY_OFF,      /* use RAM contents for display */
-        SSD1306_SETINVERT_OFF,          /* no inversion */
-        SSD1306_SCROLL_DEACTIVATE,      /* no scrolling */
-        SSD1306_SETDISPLAY_ON,          /* turn on display */
+    SSD1306_SETDISPLAY_OFF,         /* turn off display */
+    SSD1306_SETDISPLAYCLOCKDIV,     /* set clock: */
+    0x80,                           /* Fosc = 8, divide ratio = 0 + 1 */
+    SSD1306_SETMULTIPLEX,           /* sets multiplex ratio of 31 */
+    (SSD1306_ROWS - 1),             /* COM0 to COM31 on the display */
+    SSD1306_VERTICALOFFSET,         /* display vertical offset: */
+    0,                              /* no vertical offset */
+    SSD1306_SETSTARTLINE | 0x00,    /* RAM start line at 0 */
+    SSD1306_SETCHARGEPUMP,          /* charge pump */
+    0x14,                           /* charge pump ON (0x10 for OFF) */
+    SSD1306_SETADDRESSMODE,         /* addressing mode */
+    0x00,                           /* horizontal addressing mode */
+    SSD1306_COLSCAN_ASCENDING,      /* dont flip comumns */
+    SSD1306_COMSCAN_ASCENDING,      /* don't flip rows (pages) */
+    SSD1306_SETCOMPINS,             /* set COM pins */
+    0x02,                           /* sequential pin mode */
+    SSD1306_SETCONTRAST,            /* set contrast */
+    0x7F,                           /* datasheet default */
+    SSD1306_SETPRECHARGE,           /* set precharge period */
+    0xF1,                           /* phase1 = 15, phase2 = 1 */ 
+    SSD1306_SETVCOMLEVEL,           /* set VCOMH deselect level */
+    0x40,                           /* ????? (0,2,3) */
+    SSD1306_ENTIREDISPLAY_OFF,      /* use RAM contents for display */
+    SSD1306_SETINVERT_OFF,          /* no inversion */
+    SSD1306_SCROLL_DEACTIVATE,      /* no scrolling */
+    SSD1306_SETDISPLAY_ON,          /* turn on display */
 };
 
 void ssd1306_send_cmdlist(const uint8_t* list, size_t lenght){
@@ -117,65 +217,34 @@ void ssd1306_send_data(const uint8_t* data, size_t lenght){
     i2c_write_blocking(i2c0, SSD1306_ADDRESS, i2c_output_buffer, lenght + 1, false);    
 }
 
-void ssd1306_refresh(){
-    ssd1306_send_data((uint8_t*)ssd1306_vram, 512);
+/* commands for horizontal addressing mode */
+void ssd1306_set_page_address(uint8_t page_start, uint8_t page_end){
+
 }
 
-uint8_t ssd1306_draw_pixel(uint16_t x, uint16_t y, uint8_t value){ /* dunno how this works really */
-    /* static variables used only in the function calls multiple times */
-    static uint8_t page;
-    static uint8_t config[6];
-    static uint8_t updated_vram_page;
+void ssd1306_set_column_address(uint8_t column_start, uint8_t column_end){
 
-    // ensure pixel location is valid
-    if (x >= SSD1306_COLUMNS)   return 1;
-    if (y >= SSD1306_ROWS)      return 2;
-
-    page = y >> 3; /* selects proper page ( y / 8) */
-    
-    /* prolly can be more optimised D: */
-    config[0] = SSD1306_SETPAGERANGE;
-    config[1] = page;
-    config[2] = page;
-    config[3] = SSD1306_SETCOLRANGE;
-    config[4] = x;
-    config[5] = x;
-
-    /* send the config over display to select proper page */
-    ssd1306_send_cmdlist(config, sizeof(config));
-    
-    /* draw the pixel to VRAM, keeping all other VRAM information */    
-    if(value){
-        ssd1306_vram[page][x] |=   0x01 << (y & 0x07);
-    } else {
-        ssd1306_vram[page][x] &= ~(0x01 << (y & 0x07));
-    }
-
-    /* 1 page has 8 bits or a uint8_t * 127 columns,
-    selecting the proper page and column, writing there
-    will update the 8 bits in that page on that column */
-
-
-    /* updates display VRAM with the changed byte only */
-    updated_vram_page = ssd1306_vram[page][x];
-    ssd1306_send_data(&updated_vram_page, sizeof(updated_vram_page));
-
-    return 0;
-}
-
-void ssd1306_draw_pixel2(uint8_t x, uint8_t y, uint8_t value){
-    if(value){
-        ssd1306_vram[x][y] |=   0x01 << (y & 0x07);
-    } else {
-        ssd1306_vram[x][y] &= ~(0x01 << (y & 0x07));
-    }    
 }
 
 void ssd1306_init(){
     ssd1306_send_cmdlist(ssd1306_cmdlist_init, sizeof(ssd1306_cmdlist_init));
-    memset((uint8_t*)ssd1306_vram, 0x00, 512);
-    memset(i2c_output_buffer, 0x00, sizeof(i2c_output_buffer));
-    ssd1306_refresh();
+    ssd1306_refresh();    
+}
+
+void ssd1306_refresh(){ /* sets whole vram to 0s */
+    ssd1306_send_data((uint8_t*)ssd1306_vram, 512);
+}
+
+/* Draws character from font table, starting from page 0 column 0 */
+void ssd1306_draw_character(uint8_t c){
+    static uint8_t updated_vram_page;
+    static uint8_t char_byte; /* 1 portion of 6x8 character */ 
+
+    /* draw character to the vram */
+    for(int i = 0; i < 6; i++){
+        char_byte = ssd1306_font6x8[c][i];
+        ssd1306_send_data(&char_byte, 1);
+    }    
 }
 
 /* default i2c example program */
@@ -186,14 +255,14 @@ bool reserved_addr(uint8_t addr) {
 int main() {
     /* enable UART so we can print status output */
     stdio_init_all();
-    sleep_ms(5000); /* wait 5 sec for everything to initialise */
+    /* sleep_ms(5000); /* wait 5 sec for everything to initialise */
 
 #if !defined(i2c_default) || !defined(PICO_DEFAULT_I2C_SDA_PIN) || !defined(PICO_DEFAULT_I2C_SCL_PIN)
 #warning i2c/bus_scan example requires a board with I2C pins
     puts("Default I2C pins were not defined");
 #else
-    // This example will use I2C0 on the default SDA and SCL pins (GPIO 4, GPIO 5 on a Pico, 5,6 physically)
-    i2c_init(i2c0, 400000); // 100khz baud rate
+    /* This example will use I2C0 on the default SDA and SCL pins (GPIO 4, GPIO 5 on a Pico, 5,6 physically) */
+    i2c_init(i2c0, 400000); /* 400khz baud rate */
     gpio_set_function(PICO_DEFAULT_I2C_SDA_PIN, GPIO_FUNC_I2C);
     gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
     gpio_pull_up(PICO_DEFAULT_I2C_SDA_PIN);
@@ -226,22 +295,43 @@ int main() {
 
     printf("Done.\n");
 
+
+
     /* my code starts here */
 
     ssd1306_init();
+     static uint8_t config[6];
+    config[0] = SSD1306_SETPAGERANGE;
+    config[1] = 0;
+    config[2] = 3;
+    config[3] = SSD1306_SETCOLRANGE;
+    config[4] = 0;
+    config[5] = 128 - 1;
+    ssd1306_send_cmdlist(config, sizeof(config));
    
+    const char my_name1[] = "This ";
+    const char my_name2[] = "works ";
+    const char my_name3[] = "perfectly !!!";
+
     while(1){
-        for(int i = 0; i < 120; i++){
-            for(int j = 0; j < 32; j++){
-                ssd1306_draw_pixel(i, j, 1);
-            }
+        
+        for(int i = 0; i < strlen(my_name1); i++){
+            ssd1306_draw_character(my_name1[i] - 32);
         }
 
-        for(int i = 0; i < 120; i++){
-            for(int j = 0; j < 32; j++){
-                ssd1306_draw_pixel(i, j, 0);
-            }
-        }        
+        sleep_ms(2000);
+
+        for(int i = 0; i < strlen(my_name2); i++){
+            ssd1306_draw_character(my_name2[i] - 32);
+        }
+
+        sleep_ms(2000);
+
+        for(int i = 0; i < strlen(my_name3); i++){
+            ssd1306_draw_character(my_name3[i] - 32);
+        }   
+
+        sleep_ms(10000);         
     }
 
     return 0;
